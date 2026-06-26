@@ -9,33 +9,36 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val pickIntent = Intent(Intent.ACTION_PICK).apply {
-            type = "image/*"
+        val picker = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            type = "*/*"
+            addCategory(Intent.CATEGORY_OPENABLE)
         }
 
-        startActivityForResult(pickIntent, 100)
+        startActivityForResult(picker, 100)
     }
+
 
     override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
-        resultIntent: Intent?
+        data: Intent?
     ) {
-        super.onActivityResult(requestCode, resultCode, resultIntent)
+        super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 100 && resultCode == RESULT_OK) {
 
-            val selectedUri = resultIntent?.data
-
             val result = Intent().apply {
-                data = selectedUri
+                setData(data?.data)
+
+                addFlags(
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
             }
 
             setResult(
                 RESULT_OK,
                 result
             )
-
         }
 
         finish()
