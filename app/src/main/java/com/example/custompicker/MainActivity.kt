@@ -9,34 +9,31 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val pick = Intent(
-            Intent.ACTION_PICK
-        ).apply {
+        val pickIntent = Intent(Intent.ACTION_PICK).apply {
             type = "image/*"
         }
 
-        startActivityForResult(pick, 100)
+        startActivityForResult(pickIntent, 100)
     }
 
-
     override fun onActivityResult(
-        requestCode:Int,
-        resultCode:Int,
-        data:Intent?
+        requestCode: Int,
+        resultCode: Int,
+        resultIntent: Intent?
     ) {
-        super.onActivityResult(
-            requestCode,
-            resultCode,
-            data
-        )
+        super.onActivityResult(requestCode, resultCode, resultIntent)
 
-        if(resultCode == RESULT_OK) {
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+
+            val selectedUri = resultIntent?.data
+
+            val result = Intent().apply {
+                data = selectedUri
+            }
 
             setResult(
                 RESULT_OK,
-                Intent().apply {
-                    data = data?.data
-                }
+                result
             )
 
         }
