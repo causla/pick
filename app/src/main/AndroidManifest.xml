@@ -1,23 +1,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:theme="@android:style/Theme.Material.Light">
+        android:theme="@android:style/Theme.Material.Light"
+        android:label="Custom Picker">
 
         <activity
             android:name=".MainActivity"
             android:exported="true">
 
-            <intent-filter>
+            <!-- Image picker -->
+            <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.PICK"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:mimeType="image/*"/>
             </intent-filter>
 
-            <intent-filter>
+            <!-- File picker -->
+            <intent-filter android:priority="1000">
                 <action android:name="android.intent.action.OPEN_DOCUMENT"/>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <category android:name="android.intent.category.OPENABLE"/>
-                <data android:mimeType="image/*"/>
+                <data android:mimeType="*/*"/>
             </intent-filter>
 
         </activity>
